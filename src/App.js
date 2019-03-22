@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import 'typeface-roboto'
 import './App.css';
 import WalliePage from './containers/WalliePage'
+import {BrowserRouter as Router} from 'react-router-dom'
 
 class App extends Component {
   render() {
     return (
-      <WalliePage /> 
+      <Router><WalliePage /></Router>
     )
   }
 }
