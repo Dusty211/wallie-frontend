@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 
-export class LoginPage extends Component {
+class LoginPage extends Component {
+  constructor() {
+    super()
+    this.state = {
+      users: []
+    }  
+  }
+
   render() {
     return (
       <div>

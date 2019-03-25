@@ -1,23 +1,45 @@
 import React, { Component, Fragment} from 'react'
 import NavBar from '../components/NavBar'
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import WallieTheme from '../theme.json';
+import JobList from '../components/JobList'
 import UserPage from './UserPage'
 import LoginPage from './LoginPage'
 import {Route, Redirect, Switch} from 'react-router-dom'
+import { API_ROOT } from '../constants/index'
 
-const theme = createMuiTheme(WallieTheme);
+class WalliePage extends Component {
+  constructor() {
+    super()
+    this.state = {
+      users: [],
+      loading: true
+    }
+  }
 
-export class WalliePage extends Component {
+  componentDidMount() {
+    fetch(`${API_ROOT}/users`)
+    .then(res => res.json())
+    .then(users => this.setState({ users, loading: false }))
+  }
+
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
+      <Fragment>
         <NavBar />
         <Switch>
-          <Route path="/users" component={UserPage}/>
+          <Route path="/users/:id" render={(props) => {
+            // debugger
+            let userId = props.match.params.id
+            let user = this.state.users.find(user => user.id === userId)
+            return this.state.loading ? null : (
+              <UserPage 
+              user={user}
+              />
+              )
+            }}/>
+          <Route path="/jobs" component={JobList}/>
           <Route path="/login" component={LoginPage}/>
         </Switch>
-      </MuiThemeProvider>
+      </Fragment>
     )
   }
 }
