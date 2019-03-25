@@ -15,6 +15,8 @@ class WalliePage extends Component {
     }
   }
 
+  
+
   componentDidMount() {
     fetch(`${API_ROOT}/users`)
     .then(res => res.json())
@@ -27,13 +29,10 @@ class WalliePage extends Component {
         <NavBar />
         <Switch>
           <Route path="/users/:id" render={(props) => {
-            // debugger
-            let userId = props.match.params.id
+            let userId = parseInt(props.match.params.id)
             let user = this.state.users.find(user => user.id === userId)
             return this.state.loading ? null : (
-              <UserPage 
-              user={user}
-              />
+              <UserPage user={user}/>
               )
             }}/>
           <Route path="/jobs" component={JobList}/>

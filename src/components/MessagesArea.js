@@ -3,7 +3,7 @@ import NewMessageForm from './NewMessageForm'
 
 class MessagesArea extends Component {
   render() {
-    const { id, title, messages, created_at } = this.props.job
+    const { id, title, messages } = this.props.job
     return (
       <div className="messagesArea">
         <h2>{title}</h2>

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles, AppBar, Toolbar, IconButton, Typography, Button } from '@material-ui/core'
 import { styled } from '@material-ui/styles'
