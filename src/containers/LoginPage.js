@@ -5,10 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { SnackbarProvider, withSnackbar } from 'notistack';
-// import WarningIcon from '@material-ui/icons/Warning';
-// import Snackbar from '@material-ui/core/Snackbar';
-// import SnackbarContent from '@material-ui/core/SnackbarContent';
+import CustomizedSnackbars from './Snackbar'
 
 const styles = theme => ({
   container: {
@@ -53,7 +50,7 @@ class LoginPage extends React.Component {
   checkValidUser = () => {
     let currUser = this.props.users.find(user => this.state.username === user.username)
     if (currUser && currUser.password === this.state.password) {
-      this.setState({ currUser })
+      this.setState({ currUser, failedLogin: false })
     }
     else {
       this.setState({
@@ -91,12 +88,7 @@ class LoginPage extends React.Component {
         <Button variant="outlined" className={classes.button} onClick={this.checkValidUser}>
           Log in
         </Button>
-        {this.state.failedLogin ?
-          <SnackbarProvider
-            variant="warning"
-            className={classes.margin}
-            message="This is a warning message!"
-          /> : null }
+        <CustomizedSnackbars />
         </form>
       </div>
     )
