@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CustomizedSnackbars from './Snackbar'
@@ -46,7 +46,6 @@ class LoginPage extends React.Component {
     this.setState({ [name]: event.target.value });
   };
 
-
   checkValidUser = () => {
     let currUser = this.props.users.find(user => this.state.username === user.username)
     if (currUser && currUser.password === this.state.password) {
@@ -60,6 +59,11 @@ class LoginPage extends React.Component {
       })
     }
   }
+
+  handleClose = (event, reason) => {
+// debugger;
+    this.setState({ failedLogin: false });
+  };
 
   render() {
     // debugger;
@@ -88,7 +92,7 @@ class LoginPage extends React.Component {
         <Button variant="outlined" className={classes.button} onClick={this.checkValidUser}>
           Log in
         </Button>
-        <CustomizedSnackbars />
+        <CustomizedSnackbars handleClose={this.handleClose} failedLogin={this.state.failedLogin} />
         </form>
       </div>
     )

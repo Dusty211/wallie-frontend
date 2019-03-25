@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
 import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
-import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
@@ -62,15 +59,7 @@ function MySnackbarContent(props) {
         </span>
       }
       action={[
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          className={classes.close}
-          onClick={onClose}
-        >
-          <CloseIcon className={classes.icon} />
-        </IconButton>,
+
       ]}
       {...other}
     />
@@ -102,35 +91,23 @@ class CustomizedSnackbars extends React.Component {
     this.setState({ open: true });
   };
 
-  handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({ open: false });
-  };
-
   render() {
     const { classes } = this.props;
 
     return (
       <div>
-        <Button className={classes.margin} onClick={this.handleClick}>
-          Open warning snackbar
-        </Button>
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
           }}
-          open={this.state.open}
-          autoHideDuration={3000}
-          onClose={this.handleClose}
+          open={this.props.failedLogin}
+          onClick={this.props.handleClose}
         >
         <MySnackbarContentWrapper
           variant="warning"
           className={classes.margin}
-          message="This is a warning message!"
+          message="Wrong credentials"
         />
         </Snackbar>
 
