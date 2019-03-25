@@ -4,6 +4,7 @@ import { API_ROOT } from '../constants'
 import NewJobForm from './NewJobForm'
 import MessagesArea from './MessagesArea'
 import Cable from './Cable'
+import ListOfJobs from './ListOfJobs'
 
 class JobList extends Component {
   constructor() {
@@ -15,7 +16,7 @@ class JobList extends Component {
   }
 
   componentDidMount = () => {
-    fetch(`${API_ROOT}/jobs`)
+    fetch(`${API_ROOT}/users/${this.props.currUser.id}/jobs`)
     .then(res => res.json())
     .then(jobs => this.setState({ jobs }))
   }
@@ -82,11 +83,12 @@ const findActiveJob = (jobs, activeJob) => {
 }
 
 const mapJobs = (jobs, handleClick) => {
-  return jobs.map(job => {
-    return (
-      <li key={job.id} onClick={() => handleClick(job.id)}>
-        {job.title}
-      </li>
-    )
-  })
+  return <ListOfJobs jobs={jobs} handleClick={handleClick}/>
+    // return jobs.map(job => {
+    //   return (
+      // <li key={job.id} onClick={() => handleClick(job.id)}>
+      //   {job.title}
+      // </li>
+    // )
+  // })
 }
