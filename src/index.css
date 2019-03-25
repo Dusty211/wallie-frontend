@@ -12,12 +12,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.welcome {
+  text-align: center;
+  padding: 20px;
+}
 
 #cardGrid {
   padding: 10px;
 }
 
-.welcome {
-  text-align: center;
-  padding: 20px;
+#login-bar {
+  background-color: rgb(160,160,160);
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  height: 150px;
+  padding-top: 40px;
+  padding-left: 10%;
 }
