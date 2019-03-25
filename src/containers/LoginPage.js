@@ -5,6 +5,10 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { SnackbarProvider, withSnackbar } from 'notistack';
+// import WarningIcon from '@material-ui/icons/Warning';
+// import Snackbar from '@material-ui/core/Snackbar';
+// import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 const styles = theme => ({
   container: {
@@ -34,17 +38,31 @@ class LoginPage extends React.Component {
 
   constructor() {
     super()
-
-      this.state = {
+    this.state = {
       username: '',
-      password: ''
+      password: '',
+      failedLogin: false
     };
-
   }
 
-    handleChange = name => event => {
+  handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
+
+
+  checkValidUser = () => {
+    let currUser = this.props.users.find(user => this.state.username === user.username)
+    if (currUser && currUser.password === this.state.password) {
+      this.setState({ currUser })
+    }
+    else {
+      this.setState({
+        username: '',
+        password: '',
+        failedLogin: true
+      })
+    }
+  }
 
   render() {
     // debugger;
@@ -65,12 +83,20 @@ class LoginPage extends React.Component {
           label="Password"
           className={classes.textField}
           type="password"
+          value={this.state.password}
+          onChange={this.handleChange('password')}
           autoComplete="current-password"
           margin="normal"
         />
-        <Button variant="outlined" className={classes.button}>
-        Log in
-      </Button>
+        <Button variant="outlined" className={classes.button} onClick={this.checkValidUser}>
+          Log in
+        </Button>
+        {this.state.failedLogin ?
+          <SnackbarProvider
+            variant="warning"
+            className={classes.margin}
+            message="This is a warning message!"
+          /> : null }
         </form>
       </div>
     )

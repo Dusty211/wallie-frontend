@@ -11,11 +11,10 @@ class WalliePage extends Component {
     super()
     this.state = {
       users: [],
-      loading: true
+      loading: true,
+      currUser: null
     }
   }
-
-  
 
   componentDidMount() {
     fetch(`${API_ROOT}/users`)
@@ -36,7 +35,7 @@ class WalliePage extends Component {
               )
             }}/>
           <Route path="/jobs" component={JobList}/>
-          <Route path="/login" component={LoginPage}/>
+          <Route path="/login" render={() => <LoginPage users={this.state.users} checkValidUser={this.checkValidUser}/>}/>
         </Switch>
       </Fragment>
     )
