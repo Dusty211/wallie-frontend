@@ -3,7 +3,7 @@ import NavBar from '../components/NavBar'
 import JobList from '../components/JobList'
 import UserPage from './UserPage'
 import LoginPage from './LoginPage'
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch, Redirect} from 'react-router-dom'
 import { API_ROOT } from '../constants/index'
 
 class WalliePage extends Component {
@@ -19,16 +19,21 @@ class WalliePage extends Component {
   componentDidMount() {
     fetch(`${API_ROOT}/users`)
     .then(res => res.json())
-    .then(users => this.setState({ users, loading: false, currUser: users[0] }))
+    .then(users => this.setState({ users, loading: false }))
   }
 
   handleLogoutClick = () => {
     this.setState({ currUser: null })
   }
 
+  handleLoginClick = (currUser) => {
+    this.setState({ currUser })
+  }
+
   render() {
     return (
       <Fragment>
+        {this.state.currUser !== null ? <Redirect to={`/users/${this.state.currUser.id}`}/> : null}
         <NavBar currUser={this.state.currUser} handleLogoutClick={this.handleLogoutClick}/>
         <Switch>
           <Route path="/users/:id/jobs" render={(props) => {
@@ -43,7 +48,7 @@ class WalliePage extends Component {
               <UserPage user={user}/>
               )
             }}/>
-          <Route path="/login" render={() => <LoginPage users={this.state.users} checkValidUser={this.checkValidUser}/>}/>
+          <Route path="/login" render={() => <LoginPage handleLoginClick={this.handleLoginClick} users={this.state.users} checkValidUser={this.checkValidUser}/>}/>
         </Switch>
       </Fragment>
     )

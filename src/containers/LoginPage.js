@@ -5,7 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import CustomizedSnackbars from './Snackbar'
+import CustomizedSnackbars from './Snackbar';
+
 
 const styles = theme => ({
   container: {
@@ -49,7 +50,8 @@ class LoginPage extends React.Component {
   checkValidUser = () => {
     let currUser = this.props.users.find(user => this.state.username === user.username)
     if (currUser && currUser.password === this.state.password) {
-      this.setState({ currUser, failedLogin: false })
+      this.setState({ failedLogin: false })
+      this.props.handleLoginClick(currUser)
     }
     else {
       this.setState({
