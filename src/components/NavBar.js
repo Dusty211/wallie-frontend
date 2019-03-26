@@ -97,6 +97,11 @@ class NavBar extends Component {
     this.setState({ open: false });
   };
 
+  handleLogoutClick = () => {
+    this.handleDrawerClose()
+    this.props.handleLogoutClick()
+  }
+
   render() {
     const { classes, theme } = this.props
     return (
@@ -125,7 +130,9 @@ class NavBar extends Component {
             {this.props.currUser === null ? 
               null
               :
-              <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}><Button onClick={this.props.handleLogoutClick} color="inherit">Logout</Button></Link>
+              <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>
+                <Button onClick={this.handleLogoutClick} color="inherit">Logout</Button>
+              </Link>
             }
           </Toolbar>
         </MyAppBar>
@@ -151,10 +158,12 @@ class NavBar extends Component {
           <Divider />
           {this.props.currUser === null ?
             <List>
-              <ListItem button key={'Login'}>
-                <ListItemIcon><VpnKey /></ListItemIcon>
-                <ListItemText primary={'Login'} />
-              </ListItem>
+              <Link to='/login'>
+                <ListItem button key={'Login'}>
+                  <ListItemIcon><VpnKey /></ListItemIcon>
+                  <ListItemText primary={'Login'} />
+                </ListItem>
+              </Link> 
               <ListItem button key={'Signup'}>
                 <ListItemIcon><PlaylistAdd /></ListItemIcon>
                 <ListItemText primary={'Signup'} />
@@ -162,14 +171,18 @@ class NavBar extends Component {
             </List>
             :
             <List>
-              <ListItem button key={'My Pieces'}>
-                <ListItemIcon><Photo /></ListItemIcon>
-                <ListItemText primary={'My Pieces'} />
-              </ListItem>
-              <ListItem button key={'My Jobs'} >
-                <ListItemIcon><Work /></ListItemIcon>
-                <ListItemText primary={'My Jobs'} />
-              </ListItem>
+              <Link to={`/users/${this.props.currUser.id}`}>
+                <ListItem button key={'My Pieces'} onClick={this.handleDrawerClose}>
+                  <ListItemIcon><Photo /></ListItemIcon>
+                  <ListItemText primary={'My Pieces'} />
+                </ListItem>
+              </Link>
+              <Link to={`/users/${this.props.currUser.id}/jobs`}>
+                <ListItem button key={'My Jobs'} onClick={this.handleDrawerClose}>
+                  <ListItemIcon><Work /></ListItemIcon>
+                  <ListItemText primary={'My Jobs'} />
+                </ListItem>
+              </Link> 
               <ListItem button key={'Find Jobs'}>
                 <ListItemIcon><Search /></ListItemIcon>
                 <ListItemText primary={'Find Jobs'} />

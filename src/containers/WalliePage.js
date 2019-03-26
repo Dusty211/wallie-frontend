@@ -19,7 +19,11 @@ class WalliePage extends Component {
   componentDidMount() {
     fetch(`${API_ROOT}/users`)
     .then(res => res.json())
-    .then(users => this.setState({ users, loading: false }))
+    .then(users => this.setState({ 
+      users, 
+      loading: false, 
+      // currUser: users[0] 
+    }))
   }
 
   handleLogoutClick = () => {
@@ -33,7 +37,6 @@ class WalliePage extends Component {
   render() {
     return (
       <Fragment>
-        
         <NavBar currUser={this.state.currUser} handleLogoutClick={this.handleLogoutClick}/>
         <Switch>
           <Route path="/users/:id/jobs" render={(props) => {
