@@ -20,7 +20,7 @@ const styles = theme => ({
 });
 
 class CheckboxList extends React.Component {
-  constructor(props) {
+  constructor() {
     super()
     this.state = {
       checked: [],
@@ -57,7 +57,7 @@ class CheckboxList extends React.Component {
             />
             <ListItemText primary={`${job.title} (${this.state.checked.indexOf(job) ? 'In Progress': 'Completed'})`} />
             <ListItemSecondaryAction>
-              <IconButton aria-label="Comments">
+              <IconButton aria-label="Comments" onClick={() => this.props.handleClick(job.id)}>
                 <CommentIcon />
               </IconButton>
             </ListItemSecondaryAction>
