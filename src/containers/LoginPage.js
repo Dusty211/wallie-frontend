@@ -46,6 +46,27 @@ class LoginPage extends React.Component {
     };
   }
 
+componentDidMount() {
+ fetch('http://localhost:3000/api/v1/users', {
+   method: 'POST',
+   headers: {
+     'Content-Type': 'application/json',
+     Accept: 'application/json'
+   },
+   body: JSON.stringify({
+     user: {
+       name: 'stupid chef',
+       username: 'guy',
+       password: 'hi',
+       usertype: 'wallist'
+     }
+   })
+ })
+   .then(r => r.json())
+   .then(console.log)
+}
+
+
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
