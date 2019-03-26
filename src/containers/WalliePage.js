@@ -33,7 +33,7 @@ class WalliePage extends Component {
   render() {
     return (
       <Fragment>
-        {this.state.currUser !== null ? <Redirect to={`/users/${this.state.currUser.id}`}/> : null}
+        
         <NavBar currUser={this.state.currUser} handleLogoutClick={this.handleLogoutClick}/>
         <Switch>
           <Route path="/users/:id/jobs" render={(props) => {

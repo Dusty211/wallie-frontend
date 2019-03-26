@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CustomizedSnackbars from './Snackbar';
+import {Redirect} from 'react-router-dom'
 
 
 const styles = theme => ({
@@ -39,7 +40,9 @@ class LoginPage extends React.Component {
     this.state = {
       username: '',
       password: '',
-      failedLogin: false
+      failedLogin: false,
+      successfulLogin: false,
+      currUser: null
     };
   }
 
@@ -50,7 +53,11 @@ class LoginPage extends React.Component {
   checkValidUser = () => {
     let currUser = this.props.users.find(user => this.state.username === user.username)
     if (currUser && currUser.password === this.state.password) {
-      this.setState({ failedLogin: false })
+      this.setState({
+        failedLogin: false,
+        successfulLogin: true,
+        currUser
+       })
       this.props.handleLoginClick(currUser)
     }
     else {
@@ -70,7 +77,9 @@ class LoginPage extends React.Component {
   render() {
     // debugger;
     const { classes } = this.props;
-    return (
+    return this.state.successfulLogin ?
+    <Redirect to = {`/users/${this.state.currUser.id}`} />
+     : (
       <div id='login-bar'>
         <form className={classes.container} noValidate autoComplete="off">
         <TextField
