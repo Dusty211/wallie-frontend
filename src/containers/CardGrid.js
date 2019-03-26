@@ -40,7 +40,7 @@ const MyGridList = styled(GridList)({
 
 class CardGrid extends Component {
   render() {
-    const { classes, user, pieces, handleStarClick } = this.props
+    const { classes, user, pieces, handleStarClick, handleInfoClick } = this.props
     return (
       <div className={classes.root}>
         <MyGridList cellHeight={300} className={classes.gridList} cols={3} id="cardGrid">
@@ -53,10 +53,11 @@ class CardGrid extends Component {
                 className={classes.titleBar}
                 titlePosition="top"
                 actionPosition="left"
-                actionIcon={
+                actionIcon={(user.usertype === "muralist") ?  
                   <IconButton onClick={() => handleStarClick(piece)} className={classes.icon}>
                     <StarBorder />
                   </IconButton>
+                  : ""
                 }
               />
               <GridListTileBar
@@ -64,7 +65,7 @@ class CardGrid extends Component {
                 title={user.name}
                 className={classes.footerBar}
                 actionIcon={
-                  <IconButton className={classes.icon}>
+                  <IconButton onClick={handleInfoClick} className={classes.icon}>
                     <Info />
                   </IconButton>
                 }

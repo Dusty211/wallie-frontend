@@ -3,7 +3,7 @@ import NavBar from '../components/NavBar'
 import JobList from '../components/JobList'
 import UserPage from './UserPage'
 import LoginPage from './LoginPage'
-import {Route, Switch, Redirect} from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { API_ROOT } from '../constants/index'
 
 class WalliePage extends Component {
@@ -48,7 +48,7 @@ class WalliePage extends Component {
             let userId = parseInt(props.match.params.id)
             let user = this.state.users.find(user => user.id === userId)
             return this.state.loading ? null : (
-              <UserPage user={user}/>
+              <UserPage currUser={this.state.currUser} user={user}/>
               )
             }}/>
           <Route path="/login" render={() => <LoginPage handleLoginClick={this.handleLoginClick} users={this.state.users} checkValidUser={this.checkValidUser}/>}/>

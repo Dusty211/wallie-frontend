@@ -7,7 +7,7 @@ import { Divider, ListItem, ListItemIcon, ListItemText, List } from '@material-u
 import { styled } from '@material-ui/styles'
 import { Menu, Photo, Work, Search, ChevronLeft, ChevronRight, VpnKey, PlaylistAdd, Brush } from '@material-ui/icons'
 
-const drawerWidth = 240
+const drawerWidth = 200
 
 const styles = theme => ({
   grow: {
@@ -137,7 +137,7 @@ class NavBar extends Component {
           </Toolbar>
         </MyAppBar>
         <Drawer
-          variant="permanent"
+          variant={this.props.currUser ? "permanent" : "persistent"}
           className={classNames(classes.drawer, {
             [classes.drawerOpen]: this.state.open,
             [classes.drawerClose]: !this.state.open,
@@ -159,12 +159,12 @@ class NavBar extends Component {
           {this.props.currUser === null ?
             <List>
               <Link to='/login'>
-                <ListItem button key={'Login'}>
+                <ListItem button key={'Login'} onClick={this.handleDrawerClose}>
                   <ListItemIcon><VpnKey /></ListItemIcon>
-                  <ListItemText primary={'Login'} />
+                  <ListItemText primary={'Login'}/>
                 </ListItem>
               </Link> 
-              <ListItem button key={'Signup'}>
+              <ListItem button key={'Signup'} onClick={this.handleDrawerClose}>
                 <ListItemIcon><PlaylistAdd /></ListItemIcon>
                 <ListItemText primary={'Signup'} />
               </ListItem>
