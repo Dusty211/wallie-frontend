@@ -72,15 +72,16 @@ class UserPage extends Component {
   }
 
   render() {
+    // const jobOffers = this.state.map
     return (
       <Fragment>
+        
         <OfferDialog 
           showOfferDialog={this.state.showOfferDialog} 
           handleDialogClose={this.handleDialogClose}
           handleDialogSendRequest={this.handleDialogSendRequest}
         />
-        <Typography variant="h5" color="inherit" className="welcome">W</Typography>
-        <Typography variant="h5" color="inherit" className="welcome"> Welcome, {this.props.user.name}!</Typography>
+        <Typography variant="h5" color="inherit" className="welcome">Wallie</Typography>
         <CardGrid 
           pieces={this.state.pieces} 
           user={this.props.user} 

@@ -3,14 +3,18 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { withStyles, AppBar, Toolbar, IconButton, Typography, Button, Drawer, CssBaseline } from '@material-ui/core'
-import { Divider, ListItem, ListItemIcon, ListItemText, List } from '@material-ui/core'
+import { Divider, ListItem, ListItemIcon, ListItemText, List, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core'
 import { styled } from '@material-ui/styles'
-import { Menu, Photo, Work, Search, ChevronLeft, ChevronRight, VpnKey, PlaylistAdd, Brush } from '@material-ui/icons'
+import { Menu, Photo, Work, Search, ChevronLeft, ChevronRight, VpnKey, PlaylistAdd, Brush, ExpandMore } from '@material-ui/icons'
 
-const drawerWidth = 200
+const drawerWidth = 500
 
 const styles = theme => ({
   grow: {
+    flexGrow: 1
+  },
+  username: {
+    // marginRight: 36,
     flexGrow: 1
   },
   root: {
@@ -103,7 +107,7 @@ class NavBar extends Component {
   }
 
   render() {
-    const { classes, theme } = this.props
+    const { classes, theme, showFindUser, currUser } = this.props
     return (
       <Fragment>
         <CssBaseline />
@@ -127,17 +131,22 @@ class NavBar extends Component {
             <Typography variant="h5" color="inherit" className={classes.grow}>
               Wallie <Brush />
             </Typography>
-            {this.props.currUser === null ? 
+            {currUser === null ? 
               null
               :
-              <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>
-                <Button onClick={this.handleLogoutClick} color="inherit">Logout</Button>
-              </Link>
+              <Fragment>
+                <Typography variant="h5" color="inherit" className={classes.username}>
+                  Welcome, {currUser.name}!
+                </Typography>
+                <Link to="/login" style={{ color: 'white', textDecoration: 'none' }}>
+                  <Button onClick={this.handleLogoutClick} color="inherit">Log Out</Button>
+                </Link>
+              </Fragment>
             }
           </Toolbar>
         </MyAppBar>
         <Drawer
-          variant={this.props.currUser ? "permanent" : "persistent"}
+          variant={currUser ? "permanent" : "persistent"}
           className={classNames(classes.drawer, {
             [classes.drawerOpen]: this.state.open,
             [classes.drawerClose]: !this.state.open,
@@ -156,7 +165,7 @@ class NavBar extends Component {
             </IconButton>
           </div>
           <Divider />
-          {this.props.currUser === null ?
+          {currUser === null ?
             <List>
               <Link to='/login'>
                 <ListItem button key={'Login'} onClick={this.handleDrawerClose}>
@@ -171,21 +180,21 @@ class NavBar extends Component {
             </List>
             :
             <List>
-              <Link to={`/users/${this.props.currUser.id}`}>
+              <Link to={`/users/${currUser.id}`}>
                 <ListItem button key={'My Pieces'} onClick={this.handleDrawerClose}>
                   <ListItemIcon><Photo /></ListItemIcon>
                   <ListItemText primary={'My Pieces'} />
                 </ListItem>
               </Link>
-              <Link to={`/users/${this.props.currUser.id}/jobs`}>
+              <Link to={`/users/${currUser.id}/jobs`}>
                 <ListItem button key={'My Jobs'} onClick={this.handleDrawerClose}>
                   <ListItemIcon><Work /></ListItemIcon>
                   <ListItemText primary={'My Jobs'} />
                 </ListItem>
               </Link> 
-              <ListItem button key={'Find Jobs'}>
+              <ListItem button key={'Find User'} onClick={showFindUser}>
                 <ListItemIcon><Search /></ListItemIcon>
-                <ListItemText primary={'Find Jobs'} />
+                <ListItemText primary={'Find User'} />
               </ListItem>
             </List>
           }
