@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { styled } from '@material-ui/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
+import { GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
+import { Info, StarBorder } from '@material-ui/icons';
 
 
 const styles = theme => ({
@@ -15,9 +15,22 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: 1000,
+    width: 900,
     imageFullHeight: 450,
   },
+  titleBar: {
+    background:
+      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+  },
+  footerBar: {
+    background:
+    'linear-gradient(to top, rgba(0,0,0,0.7) 0%, ' +
+      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+  },
+  icon: {
+    color: 'white'
+  }
 });
 
 const MyGridList = styled(GridList)({
@@ -27,13 +40,35 @@ const MyGridList = styled(GridList)({
 
 class CardGrid extends Component {
   render() {
-    const { classes } = this.props
+    const { classes, user, pieces, handleStarClick } = this.props
     return (
       <div className={classes.root}>
         <MyGridList cellHeight={300} className={classes.gridList} cols={3} id="cardGrid">
-          {this.props.pieces.map(piece => (
+          {pieces.map(piece => (
             <GridListTile key={piece.id} id="gridTile">
               <img src={piece.image} className={classes.image} alt={piece.id} />
+              <GridListTileBar
+                title={(user.usertype === "muralist") ? "" : piece.location}
+                subtitle={piece.rating}
+                className={classes.titleBar}
+                titlePosition="top"
+                actionPosition="left"
+                actionIcon={
+                  <IconButton onClick={() => handleStarClick(piece)} className={classes.icon}>
+                    <StarBorder />
+                  </IconButton>
+                }
+              />
+              <GridListTileBar
+                // title={piece.title}
+                title={user.name}
+                className={classes.footerBar}
+                actionIcon={
+                  <IconButton className={classes.icon}>
+                    <Info />
+                  </IconButton>
+                }
+              />
             </GridListTile>
           ))}
         </MyGridList>
