@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { ActionCable } from 'react-actioncable-provider'
 import { API_ROOT } from '../constants'
 import NewJobForm from './NewJobForm'
