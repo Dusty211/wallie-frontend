@@ -42,53 +42,87 @@ class LoginPage extends React.Component {
       password: '',
       failedLogin: false,
       successfulLogin: false,
-      currUser: null
+      loginUser: null
     };
   }
 
-componentDidMount() {
- fetch('http://localhost:3000/api/v1/users', {
-   method: 'POST',
-   headers: {
-     'Content-Type': 'application/json',
-     Accept: 'application/json'
-   },
-   body: JSON.stringify({
-     user: {
-       name: 'stupid chef',
-       username: 'guy',
-       password: 'hi',
-       usertype: 'wallist'
-     }
+// componentDidMount() {
+//  fetch('http://localhost:3000/api/v1/users', {
+//    method: 'POST',
+//    headers: {
+//      'Content-Type': 'application/json',
+//      Accept: 'application/json'
+//    },
+//    body: JSON.stringify({
+//      user: {
+//        name: 'Nick Nolte',
+//        username: 'nick',
+//        password: 'password',
+//        usertype: 'wallist'
+//      }
+//    })
+//  })
+//    .then(r => r.json())
+//    .then(console.log)
+// }
+handleLoginSubmit = () => {
+  fetch('http://localhost:3000/api/v1/login', {
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
+       Accept: 'application/json'
+     },
+     body: JSON.stringify({
+          user: {
+            username: this.state.username,
+            password: this.state.password
+          }
+     })
    })
- })
-   .then(r => r.json())
-   .then(console.log)
+     .then(r => r.json())
+     .then(data => {
+       if(data.authenticated) {
+         this.setState({
+           failedLogin: false,
+           successfulLogin: true,
+           loginUser: data.user
+          })
+          this.props.handleLoginClick(data.user)
+          localStorage.setItem('token', data.jwt)
+       }else{
+         this.setState({
+           username: '',
+           password: '',
+           failedLogin: true
+           })
+       }})
+
 }
+
 
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
 
-  checkValidUser = () => {
-    let currUser = this.props.users.find(user => this.state.username === user.username)
-    if (currUser && currUser.password === this.state.password) {
-      this.setState({
-        failedLogin: false,
-        successfulLogin: true,
-        currUser
-       })
-      this.props.handleLoginClick(currUser)
-    }
-    else {
-      this.setState({
-        username: '',
-        password: '',
-        failedLogin: true
-      })
-    }
-  }
+  // checkValidUser = () => {
+  //   let currUser = this.props.users.find(user => this.state.username === user.username)
+  //   if (currUser && currUser.password === this.state.password) {
+  //     this.setState({
+  //       failedLogin: false,
+  //       successfulLogin: true,
+  //       loginUser: currUser
+  //      })
+  //     this.props.handleLoginClick(currUser)
+  //   }
+  //   else {
+  //     this.setState({
+  //       username: '',
+  //       password: '',
+  //       failedLogin: true
+  //     })
+  //   }
+  // }
 
   handleClose = (event, reason) => {
 // debugger;
@@ -99,7 +133,7 @@ componentDidMount() {
     // debugger;
     const { classes } = this.props;
     return this.state.successfulLogin ?
-    <Redirect to = {`/users/${this.state.currUser.id}`} />
+    <Redirect to = {`/users/${this.state.loginUser.id}`} />
      : (
       <div id='login-bar'>
         <form className={classes.container} noValidate autoComplete="off">
@@ -121,7 +155,7 @@ componentDidMount() {
           autoComplete="current-password"
           margin="normal"
         />
-        <Button variant="outlined" className={classes.button} onClick={this.checkValidUser}>
+          <Button variant="outlined" className={classes.button} onClick={this.handleLoginSubmit}>
           Log in
         </Button>
         <CustomizedSnackbars handleClose={this.handleClose} failedLogin={this.state.failedLogin} />
