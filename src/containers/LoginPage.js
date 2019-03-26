@@ -72,12 +72,11 @@ class LoginPage extends React.Component {
     }
   }
 
-  handleClose = (event, reason) => {
+  handleClose = () => {
     this.setState({ failedLogin: false });
   };
 
   render() {
-    // debugger;
     const { classes } = this.props;
     return this.state.successfulLogin ?
     <Redirect to = {`/users/${this.state.currUser.id}`} />

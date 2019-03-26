@@ -14,6 +14,8 @@ class WalliePage extends Component {
       users: [],
       loading: true,
       currUser: null,
+      search: false,
+      searchUser: null,
       showFindDialog: false
     }
   }
@@ -28,7 +30,11 @@ class WalliePage extends Component {
   }
 
   handleLogoutClick = () => {
-    this.setState({ currUser: null })
+    this.setState({ 
+      currUser: null, 
+      searchUser: null,
+      search: false
+    })
   }
 
   handleLoginClick = (currUser) => {
@@ -43,14 +49,22 @@ class WalliePage extends Component {
     this.setState({ showFindDialog: false })
   }
 
-  handleFindUser = (userSearch) => {
-    console.log('finding', userSearch)
+  handleFindUser = (search) => {
+    this.handleFindClose()
+    let searchUser = this.state.users.find(user => user.name === search)
+    this.setState({ searchUser, search: true })
+    console.log('finding', searchUser)
+  }
+
+  afterSearchReset = () => {
+    this.setState({ search: false, searchUser: null })
   }
 
   render() {
     return (
       <Fragment>
-        <FindDialog 
+        <FindDialog
+          users={this.state.users}
           showFindDialog={this.state.showFindDialog} 
           handleFindClose={this.handleFindClose} 
           handleFindUser={this.handleFindUser}
@@ -70,23 +84,27 @@ class WalliePage extends Component {
           }/>
           <Route path="/users/:id/jobs" render={(props) => {
             if (this.state.currUser && this.state.currUser.id === parseInt(props.match.params.id)) {
-              return <JobList currUser={this.state.currUser}/>
+              return <JobList currUser={this.state.currUser} />
             }
             else if (!this.state.currUser) {
-              return <Redirect to="/login"/>
+              return <Redirect to="/login" />
             }
-          }}/>
-          <Route path="/users/:id" render={(props) => {
+          }} />
+          <Route exact path="/users/:id" render={(props) => {
             let userId = parseInt(props.match.params.id)
             let user = this.state.users.find(user => user.id === userId)
             if (this.state.loading) {
               return null
             }
-            else if (!this.state.currUser) {
+            else if (!this.state.search && !this.state.currUser) {
               return <Redirect to="/login"/>
             }
+            else if (this.state.search && this.state.currUser !== this.state.searchUser) {
+              this.state.search = !this.state.search
+              return <Redirect to={`/users/${this.state.searchUser.id}`}/>
+            }
             else {
-              return <UserPage currUser={this.state.currUser} user={user}/>
+              return <UserPage currUser={this.state.currUser} user={user} afterSearchReset={this.afterSearchReset}/>
             }
           }}/>
         </Switch>

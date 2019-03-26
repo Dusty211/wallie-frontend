@@ -3,18 +3,17 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { withStyles, AppBar, Toolbar, IconButton, Typography, Button, Drawer, CssBaseline } from '@material-ui/core'
-import { Divider, ListItem, ListItemIcon, ListItemText, List, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core'
+import { Divider, ListItem, ListItemIcon, ListItemText, List, } from '@material-ui/core'
 import { styled } from '@material-ui/styles'
-import { Menu, Photo, Work, Search, ChevronLeft, ChevronRight, VpnKey, PlaylistAdd, Brush, ExpandMore } from '@material-ui/icons'
+import { Menu, Photo, Work, Search, ChevronLeft, ChevronRight, VpnKey, PlaylistAdd, Brush } from '@material-ui/icons'
 
-const drawerWidth = 500
+const drawerWidth = 200
 
 const styles = theme => ({
   grow: {
     flexGrow: 1
   },
   username: {
-    // marginRight: 36,
     flexGrow: 1
   },
   root: {

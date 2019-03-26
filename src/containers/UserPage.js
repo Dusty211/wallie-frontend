@@ -50,18 +50,20 @@ class UserPage extends Component {
   }
 
   handleDialogSendRequest = (jobTitle) => {
-    console.log('sending', jobTitle, this.state.jobs, this.props.currUser, this.props.user)
-    if (this.props.currUser && this.props.currUser !== this.props.user) {
-
-      fetch(`${API_ROOT}/users/${this.props.user.id}/jobs`, {
+    console.log(jobTitle, this.props.currUser.id, this.props.user.id)
+    let requester = this.props.currUser.usertype === "muralist" ? this.props.user.id : this.props.currUser.id
+    let requestee = this.props.user.usertype === "wallist" ? this.props.currUser.id : this.props.user.id
+    if (this.props.currUser && this.props.currUser.id !== this.props.user.id) {
+      
+      fetch(`${API_ROOT}/users/${this.props.currUser.id}/jobs`, {
         method: 'POST',
         headers: HEADERS,
         body: JSON.stringify({
           title: jobTitle,
           active: false,
           accepted: false,
-          requester_id: this.props.currUser.id,
-          requestee_id: this.props.user.id
+          requester_id: requester,
+          requestee_id: requestee
         })
       })
     }
@@ -71,11 +73,24 @@ class UserPage extends Component {
     this.handleDialogClose()
   }
 
+  componentDidUpdate() {
+    const pieces = this.props.user.usertype === "muralist" ? [...this.props.user.murals] : [...this.props.user.walls]
+    const jobs = this.props.user.usertype === "muralist" ? [...this.props.user.assignments] : [...this.props.user.offers]
+    let same = pieces.length === this.state.pieces.length && pieces.every((value, index) => value === this.state.pieces[index])
+    if (!same)  {
+      this.setState({
+        pieces,
+        jobs,
+        showOfferDialog: false
+      })
+    }
+  }
+  
   render() {
-    // const jobOffers = this.state.map
+    // const jobOffers = this.state.map()
+
     return (
       <Fragment>
-        
         <OfferDialog 
           showOfferDialog={this.state.showOfferDialog} 
           handleDialogClose={this.handleDialogClose}
@@ -83,9 +98,9 @@ class UserPage extends Component {
         />
         <Typography variant="h5" color="inherit" className="welcome">Wallie</Typography>
         <CardGrid 
-          pieces={this.state.pieces} 
+          pieces={this.state.pieces}
           user={this.props.user} 
-          handleStarClick={this.handleStarClick} 
+          handleStarClick={this.handleStarClick}
           handleInfoClick={this.handleInfoClick}
         />
       </Fragment>
