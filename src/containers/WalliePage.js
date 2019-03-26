@@ -19,10 +19,10 @@ class WalliePage extends Component {
   componentDidMount() {
     fetch(`${API_ROOT}/users`)
     .then(res => res.json())
-    .then(users => this.setState({ 
-      users, 
-      loading: false, 
-      // currUser: users[0] 
+    .then(users => this.setState({
+      users,
+      loading: false,
+      // currUser: users[0]
     }))
   }
 

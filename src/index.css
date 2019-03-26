@@ -17,6 +17,14 @@ code {
   padding: 20px;
 }
 
+.messagesArea {
+  margin-left: 80px;
+}
+
+.newJobForm {
+  margin-left: 80px;
+}
+
 #cardGrid {
   padding: 10px;
 }
