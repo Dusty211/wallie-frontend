@@ -84,11 +84,4 @@ const findActiveJob = (jobs, activeJob) => {
 
 const mapJobs = (jobs, handleClick) => {
   return <ListOfJobs jobs={jobs} handleClick={handleClick}/>
-    // return jobs.map(job => {
-    //   return (
-      // <li key={job.id} onClick={() => handleClick(job.id)}>
-      //   {job.title}
-      // </li>
-    // )
-  // })
 }
