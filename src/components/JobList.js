@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { ActionCable } from 'react-actioncable-provider'
 import { API_ROOT } from '../constants'
 import NewJobForm from './NewJobForm'
@@ -84,11 +84,4 @@ const findActiveJob = (jobs, activeJob) => {
 
 const mapJobs = (jobs, handleClick) => {
   return <ListOfJobs jobs={jobs} handleClick={handleClick}/>
-    // return jobs.map(job => {
-    //   return (
-      // <li key={job.id} onClick={() => handleClick(job.id)}>
-      //   {job.title}
-      // </li>
-    // )
-  // })
 }
