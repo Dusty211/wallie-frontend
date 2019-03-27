@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import CardGrid from './CardGrid'
 import OfferDialog from '../components/OfferDialog'
-import { Typography } from '@material-ui/core';
+import JobChip from '../components/JobChip'
+import { Typography, Grid } from '@material-ui/core';
 import { API_ROOT, HEADERS } from '../constants'
 
 class UserPage extends Component {
@@ -87,8 +88,8 @@ class UserPage extends Component {
   }
   
   render() {
-    // const jobOffers = this.state.map()
-
+    const { currUser, user, users } = this.props
+    const jobOffers = this.state.jobs.filter(job => job.requestee_id === currUser.id && !job.accepted)
     return (
       <Fragment>
         <OfferDialog 
@@ -97,11 +98,23 @@ class UserPage extends Component {
           handleDialogSendRequest={this.handleDialogSendRequest}
         />
         <Typography variant="h5" color="inherit" className="welcome">Wallie</Typography>
+        <Grid item xs={12} styles={{ paddingTop: 60 }}>
+          <Grid container justify="center" alignItems="center" spacing={16}>
+            {jobOffers.map(job => {
+              return (
+              <Grid key={job.id} item>
+                <JobChip job={job} users={users}/>
+              </Grid>
+              )
+            })}
+          </Grid>
+        </Grid>
         <CardGrid 
           pieces={this.state.pieces}
-          user={this.props.user} 
+          user={user} 
           handleStarClick={this.handleStarClick}
           handleInfoClick={this.handleInfoClick}
+          styles={{ paddingTop: 60 }}
         />
       </Fragment>
     )

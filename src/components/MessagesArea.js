@@ -7,8 +7,11 @@ class MessagesArea extends Component {
     return (
       <div className="messagesArea">
         <h2>{title}</h2>
-        <ul>{orderedMessages(messages)}</ul>
-        <NewMessageForm job_id={id} />
+        <ul>{orderedMessages(messages, this.props.users)}</ul>
+        <NewMessageForm 
+          job_id={id} 
+          currUser={this.props.currUser} 
+        />
       </div>
     )
   }
@@ -18,7 +21,7 @@ export default MessagesArea
 
 // helpers
 
-const orderedMessages = messages => {
+const orderedMessages = (messages, users) => {
   const sortedMessages = messages.sort(
     (a, b) => new Date(a.created_at) - new Date(b.created_at)
   )
@@ -27,6 +30,7 @@ const orderedMessages = messages => {
     message.created_at = `${time.toLocaleDateString()} ${time.toLocaleTimeString()}`
   })
   return sortedMessages.map(message => {
-    return <li key={message.id}>{message.created_at} {message.content}</li>
+    let userName = users.find(user => user.id === message.user_id)
+    return <li key={message.id}>{userName.name} - {message.content} @{message.created_at}</li>
   })
 }

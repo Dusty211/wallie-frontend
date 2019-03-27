@@ -48,10 +48,10 @@ class CheckboxList extends React.Component {
     return (
       <List className={classes.jobList}>
         {jobs.map(job => (
-          <ListItem key={job} dense button onClick={this.handleToggle(job)}>
+          <ListItem key={job.id} dense button onClick={this.handleToggle(job)}>
             <Checkbox
               label="finished"
-              checked={this.state.checked.indexOf(job) !== -1}
+              checked={job.active}
               tabIndex={-1}
               disableRipple
             />

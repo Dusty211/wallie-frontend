@@ -84,7 +84,7 @@ class WalliePage extends Component {
           }/>
           <Route path="/users/:id/jobs" render={(props) => {
             if (this.state.currUser && this.state.currUser.id === parseInt(props.match.params.id)) {
-              return <JobList currUser={this.state.currUser} />
+              return <JobList currUser={this.state.currUser} users={this.state.users} />
             }
             else if (!this.state.currUser) {
               return <Redirect to="/login" />
@@ -104,7 +104,7 @@ class WalliePage extends Component {
               return <Redirect to={`/users/${this.state.searchUser.id}`}/>
             }
             else {
-              return <UserPage currUser={this.state.currUser} user={user} afterSearchReset={this.afterSearchReset}/>
+              return <UserPage currUser={this.state.currUser} user={user} users={this.state.users} afterSearchReset={this.afterSearchReset}/>
             }
           }}/>
         </Switch>

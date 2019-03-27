@@ -78,9 +78,11 @@ const styles = theme => ({
 });
 
 const MyAppBar = styled(AppBar)({
-  background: 'linear-gradient(20deg, #3949ab 30%, #039be5 80%)',
-  borderRadius: 5,
-  boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+  // background: 'linear-gradient(20deg, #3949ab 30%, #039be5 80%)',
+  background: 'linear-gradient(to bottom, #3949ab 0%, ' +
+    '#039be5 70%, rgba(0,0,0,0) 100%)',
+  // borderRadius: 5,
+  // boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
   color: 'white',
 })
 

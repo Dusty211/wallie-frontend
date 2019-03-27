@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react'
-import { ActionCable } from 'react-actioncable-provider'
+import React, { Component } from 'react'
+import { ActionCableConsumer } from 'react-actioncable-provider'
 import { API_ROOT } from '../constants'
-import NewJobForm from './NewJobForm'
 import MessagesArea from './MessagesArea'
 import Cable from './Cable'
 import ListOfJobs from './ListOfJobs'
+import { Grid } from '@material-ui/core'
 
 class JobList extends Component {
   constructor() {
@@ -18,7 +18,7 @@ class JobList extends Component {
   componentDidMount = () => {
     fetch(`${API_ROOT}/users/${this.props.currUser.id}/jobs`)
     .then(res => res.json())
-    .then(jobs => this.setState({ jobs }))
+    .then(jobs => this.setState({ jobs: jobs.filter(job => job.accepted) }))
   }
 
   handleClick = id => {
@@ -46,7 +46,7 @@ class JobList extends Component {
     const { jobs, activeJob} = this.state
     return (
       <div className="jobsList">
-        <ActionCable
+        <ActionCableConsumer
           channel={{ channel: 'JobsChannel' }}
           onReceived={this.handleReceivedJob}
         />
@@ -56,17 +56,26 @@ class JobList extends Component {
             handleReceivedMessage={this.handleReceivedMessage}
           />
         ) : null}
-        <h2>Jobs</h2>
-        <ul>{mapJobs(jobs, this.handleClick)}</ul>
-        <NewJobForm />
-        {activeJob ? (
-          <MessagesArea
+        <Grid 
+          container 
+          direction="row" 
+          justify="flex-start" 
+          alignItems="flex-start" 
+          spacing={8}
+          style={{ paddingTop: 60}}  
+        >
+          {mapJobs(jobs, this.handleClick)}
+          {activeJob ? (
+            <MessagesArea
+            currUser={this.props.currUser}
+            users={this.props.users}
             job={findActiveJob(
               jobs,
               activeJob
-            )}
-          />
-        ) : null}
+              )}
+              />
+              ) : null}
+        </Grid>
       </div>
     )
   }
@@ -83,5 +92,16 @@ const findActiveJob = (jobs, activeJob) => {
 }
 
 const mapJobs = (jobs, handleClick) => {
-  return <ListOfJobs jobs={jobs} handleClick={handleClick}/>
+  return (
+    <Grid item xs={4} style={{ paddingLeft: 50, paddingRight: 5 }}>
+      <ListOfJobs jobs={jobs} handleClick={handleClick}/> 
+    </Grid>
+  )
+    // return jobs.map(job => {
+    //   return (
+      // <li key={job.id} onClick={() => handleClick(job.id)}>
+      //   {job.title}
+      // </li>
+    // )
+  // })
 }

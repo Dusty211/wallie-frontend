@@ -7,7 +7,7 @@ class NewMessageForm extends Component {
     this.state = {
       content: '',
       job_id: props.job_id,
-      user_id: 1
+      user_id: props.currUser.id
     }
   }
 

@@ -12,17 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 .welcome {
   text-align: center;
   padding: 20px;
-}
-
-.messagesArea {
-  margin-left: 80px;
-}
-
-.newJobForm {
-  margin-left: 80px;
 }
 
 #cardGrid {
