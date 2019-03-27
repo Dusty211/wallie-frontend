@@ -20,8 +20,8 @@ class WalliePage extends Component {
     }
   }
 
-  componentDidMount() {
 
+  componentDidMount(fetchUserData) {
     let token = localStorage.getItem('token')
     if(token) {
       fetch('http://localhost:3000/api/v1/profile', {
@@ -43,6 +43,7 @@ class WalliePage extends Component {
       users,
       loading: false,
     }))
+
   }
 
   handleLogoutClick = () => {
@@ -97,7 +98,6 @@ class WalliePage extends Component {
             <LoginPage
               handleLoginClick={this.handleLoginClick}
               users={this.state.users}
-              checkValidUser={this.checkValidUser}
             />)
           }/>
           <Route path="/users/:id/jobs" render={(props) => {

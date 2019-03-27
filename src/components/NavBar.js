@@ -110,16 +110,16 @@ class NavBar extends Component {
     return (
       <Fragment>
         <CssBaseline />
-        <MyAppBar 
+        <MyAppBar
           position="fixed"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: this.state.open
           })}
         >
           <Toolbar disableGutters={!this.state.open} className={classes.toolbar}>
-            <IconButton 
-              className={classes.menuButton} 
-              color="inherit" 
+            <IconButton
+              className={classes.menuButton}
+              color="inherit"
               onClick={this.handleDrawerOpen}
               className={classNames(classes.menuButton, {
                 [classes.hide]: this.state.open
@@ -130,7 +130,7 @@ class NavBar extends Component {
             <Typography variant="h5" color="inherit" className={classes.grow}>
               Wallie <Brush />
             </Typography>
-            {currUser === null ? 
+            {(currUser === null) || (currUser === undefined) ?
               null
               :
               <Fragment>
@@ -164,14 +164,14 @@ class NavBar extends Component {
             </IconButton>
           </div>
           <Divider />
-          {currUser === null ?
+          {(currUser === null)  || (currUser === undefined) ?
             <List>
               <Link to='/login'>
                 <ListItem button key={'Login'} onClick={this.handleDrawerClose}>
                   <ListItemIcon><VpnKey /></ListItemIcon>
                   <ListItemText primary={'Login'}/>
                 </ListItem>
-              </Link> 
+              </Link>
               <ListItem button key={'Signup'} onClick={this.handleDrawerClose}>
                 <ListItemIcon><PlaylistAdd /></ListItemIcon>
                 <ListItemText primary={'Signup'} />
@@ -190,7 +190,7 @@ class NavBar extends Component {
                   <ListItemIcon><Work /></ListItemIcon>
                   <ListItemText primary={'My Jobs'} />
                 </ListItem>
-              </Link> 
+              </Link>
               <ListItem button key={'Find User'} onClick={showFindUser}>
                 <ListItemIcon><Search /></ListItemIcon>
                 <ListItemText primary={'Find User'} />
