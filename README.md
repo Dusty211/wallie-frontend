@@ -15,7 +15,7 @@ Where the mural meets it's wall, muralists can find users who want their art on 
 
 ### Clone this repository and the server repository at:
 
-Gym Buddies Ruby on Rails Server: [https://github.com/rosspjones13/wallie-frontend](https://github.com/rosspjones13/wallie-frontend).<br>
+Gym Buddies Ruby on Rails Server: [https://github.com/rosspjones13/wallie-backend](https://github.com/rosspjones13/wallie-backend).<br>
 Follow the steps to run the server.
 
 ### How to start the client:
