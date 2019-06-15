@@ -1,19 +1,13 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { ActionCableConsumer } from 'react-actioncable-provider'
 
-const Cable = ({ jobs, handleReceivedMessage }) => {
+const Cable = ({ job, handleReceivedMessage }) => {
   return (
-    <Fragment>
-      {jobs.map(job => {
-        return (
-          <ActionCableConsumer 
-            key={job.id}
-            channel={{ channel: 'MessagesChannel', job: job.id}}
-            onReceived={handleReceivedMessage}
-          />
-        )
-      })}
-    </Fragment>
+    <ActionCableConsumer 
+      key={job.id}
+      channel={{ channel: 'MessagesChannel', job: job.id}}
+      onReceived={handleReceivedMessage}
+    />
   )
 }
 

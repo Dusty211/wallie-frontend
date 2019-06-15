@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { API_ROOT, HEADERS } from '../constants'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button'
 
 class NewMessageForm extends Component {
   constructor(props) {
@@ -34,14 +36,16 @@ class NewMessageForm extends Component {
     return (
       <div className="newMessageForm">
         <form onSubmit={this.handleSubmit}>
-          <label>New Message:</label>
-          <br />
-          <input 
+          <TextField 
+            style={{ verticalAlign: 'baseline', width: '40vw' }}
             type="text"
+            label="New Message..."
             value={this.state.content}
             onChange={this.handleChange}
           />
-          <input type="submit" />
+          <Button variant="contained" color="primary" size="small" type="submit">
+            Send
+          </Button>
         </form>
       </div>
     )

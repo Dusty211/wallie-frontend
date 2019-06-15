@@ -123,7 +123,7 @@ class FindDialog extends Component {
     return (
       <div>
         <Dialog classes={{ paper: classes.dialogPaper }} open={showFindDialog} fullWidth>
-          <DialogTitle id="alert-dialog-title">{"Would you like to find?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">{"Who would you like to find?"}</DialogTitle>
           <Downshift id="downshift-simple" onChange={this.handleTextField}>
             {({
               getInputProps,

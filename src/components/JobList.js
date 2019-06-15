@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { ActionCableConsumer } from 'react-actioncable-provider'
 import { API_ROOT } from '../constants'
 import MessagesArea from './MessagesArea'
-import Cable from './Cable'
 import ListOfJobs from './ListOfJobs'
 import { Grid } from '@material-ui/core'
 
@@ -46,16 +44,16 @@ class JobList extends Component {
     const { jobs, activeJob} = this.state
     return (
       <div className="jobsList">
-        <ActionCableConsumer
+        {/* <ActionCableConsumer
           channel={{ channel: 'JobsChannel' }}
           onReceived={this.handleReceivedJob}
-        />
-        {this.state.jobs.length ? (
+        /> */}
+        {/* {this.state.jobs.length ? (
           <Cable
             jobs={jobs}
             handleReceivedMessage={this.handleReceivedMessage}
           />
-        ) : null}
+        ) : null} */}
         <Grid 
           container 
           direction="row" 
@@ -67,6 +65,7 @@ class JobList extends Component {
           {mapJobs(jobs, this.handleClick)}
           {activeJob ? (
             <MessagesArea
+            handleReceivedMessage={this.handleReceivedMessage}
             currUser={this.props.currUser}
             users={this.props.users}
             job={findActiveJob(
@@ -97,11 +96,4 @@ const mapJobs = (jobs, handleClick) => {
       <ListOfJobs jobs={jobs} handleClick={handleClick}/> 
     </Grid>
   )
-    // return jobs.map(job => {
-    //   return (
-      // <li key={job.id} onClick={() => handleClick(job.id)}>
-      //   {job.title}
-      // </li>
-    // )
-  // })
 }

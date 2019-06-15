@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import CustomizedSnackbars from './Snackbar';
 import {Redirect} from 'react-router-dom'
 
-
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -34,6 +33,9 @@ const styles = theme => ({
   input: {
     display: 'none',
   },
+  floatingLabelFocusStyle: {
+    color: 'white'
+  }
 });
 
 class LoginPage extends React.Component {
@@ -81,32 +83,34 @@ class LoginPage extends React.Component {
     return this.state.successfulLogin ?
     <Redirect to = {`/users/${this.state.currUser.id}`} />
      : (
-      <div id='login-bar'>
-        <form className={classes.container} noValidate autoComplete="off" onSubmit={this.checkValidUser}>
-          <TextField
-            id="standard-name"
-            label="Username"
-            className={classes.textField}
-            value={this.state.username}
-            onChange={this.handleChange('username')}
-            margin="normal"
-          />
-          <TextField
-            id="standard-password-input"
-            label="Password"
-            className={classes.textField}
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange('password')}
-            autoComplete="current-password"
-            margin="normal"
-          />
-          <Button variant="outlined" type="submit" className={classes.button} >
-            Log in
-          </Button>
-          <CustomizedSnackbars handleClose={this.handleClose} failedLogin={this.state.failedLogin} />
-        </form>
-      </div>
+        <div id='login-bar'>
+          <form className={classes.container} noValidate autoComplete="off" onSubmit={this.checkValidUser}>
+            <TextField
+              id="standard-name"
+              label="Username"
+              variant="filled"
+              className={classes.textField}
+              value={this.state.username}
+              onChange={this.handleChange('username')}
+              margin="normal"
+            />
+            <TextField
+              id="standard-password-input"
+              label="Password"
+              variant="filled"
+              className={classes.textField}
+              type="password"
+              value={this.state.password}
+              onChange={this.handleChange('password')}
+              autoComplete="current-password"
+              margin="normal"
+            />
+            <Button variant="contained" color="primary" type="submit" size="large" className={classes.button}>
+              Log in
+            </Button>
+            <CustomizedSnackbars handleClose={this.handleClose} failedLogin={this.state.failedLogin} />
+          </form>
+        </div>
     )
   }
 }

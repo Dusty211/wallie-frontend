@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
 import NewMessageForm from './NewMessageForm'
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Cable from './Cable'
 
 class MessagesArea extends Component {
   render() {
     const { id, title, messages } = this.props.job
+    const { job, handleReceivedMessage } = this.props
     return (
       <div className="messagesArea">
         <h2>{title}</h2>
-        <ul>{orderedMessages(messages, this.props.users)}</ul>
+        <Cable
+          job={job}
+          handleReceivedMessage={handleReceivedMessage}
+        />
+        <List>{orderedMessages(messages, this.props.users)}</List>
         <NewMessageForm 
           job_id={id} 
           currUser={this.props.currUser} 
@@ -31,6 +39,6 @@ const orderedMessages = (messages, users) => {
   })
   return sortedMessages.map(message => {
     let userName = users.find(user => user.id === message.user_id)
-    return <li key={message.id}>{userName.name} - {message.content} @{message.created_at}</li>
+    return <ListItem key={message.id}>{userName.name} - {message.content} @{message.created_at}</ListItem>
   })
 }

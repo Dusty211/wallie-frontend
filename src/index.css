@@ -23,11 +23,13 @@ code {
 }
 
 #login-bar {
-  background-color: rgb(160,160,160);
-  position: absolute;
-  top: 30%;
-  width: 100%;
-  height: 150px;
-  padding-top: 40px;
-  padding-left: 10%;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 1),
+      rgba(255, 255, 255, 0)
+    ),
+    url(./images/mural\ background.jpg);
+  width: 100vw;
+  height: 100vh;
+  padding-top: 10vh;
+  padding-left: 33vw;
 }

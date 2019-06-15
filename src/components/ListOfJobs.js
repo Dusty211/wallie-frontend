@@ -31,13 +31,13 @@ class CheckboxList extends React.Component {
     const { checked } = this.state;
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
-
+    value.active = !value.active
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
       newChecked.splice(currentIndex, 1);
     }
-
+    
     this.setState({
       checked: newChecked,
     });
@@ -55,7 +55,7 @@ class CheckboxList extends React.Component {
               tabIndex={-1}
               disableRipple
             />
-            <ListItemText primary={`${job.title} (${this.state.checked.indexOf(job) ? 'In Progress': 'Completed'})`} />
+            <ListItemText primary={`${job.title} (${!job.active ? 'In Progress': 'Completed'})`} />
             <ListItemSecondaryAction>
               <IconButton aria-label="Comments" onClick={() => this.props.handleClick(job.id)}>
                 <CommentIcon />
